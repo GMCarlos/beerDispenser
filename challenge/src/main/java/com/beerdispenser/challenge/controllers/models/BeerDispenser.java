@@ -1,4 +1,4 @@
-package com.beerdispenser.challenge.controller.model;
+package com.beerdispenser.challenge.controllers.models;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -20,6 +20,17 @@ public class BeerDispenser {
     this.isOpen = false;
     this.totalMoneyEarned = 0;
     this.totalUses = 0;
+  }
+
+  public float getTotalMoneyEarned(){
+    float totalMoney = this.totalMoneyEarned;
+    if(isOpen){
+      LocalDateTime tapCloseTime = LocalDateTime.now();
+      double timeDiffSeconds = Duration.between(tapStartTime, tapCloseTime).toSeconds();
+      double moneyEarned = timeDiffSeconds * flowVolume;
+      totalMoney += moneyEarned;
+    }
+    return totalMoney;
   }
 
   public void openTap() {
